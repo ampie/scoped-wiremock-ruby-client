@@ -1,0 +1,6 @@
+# config/cucumber.yml
+##YAML Template
+---
+
+scoped: features  -r lib/android/sbg_reusable_interactions -r lib/automation_support/cucumber -r features/step_definitions --format=AutomationSupport::Cucumber::CucumberCallbacks
+

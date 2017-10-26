@@ -1,0 +1,44 @@
+version: '2'
+services:
+  automation-test:
+    image: docker.registry.standardbank.co.za/automation-test:0.1-SNAPSHOT
+    ports:
+     - "32796:8080"
+     - "33796:6300"
+     - "34796:8787"
+    links:
+     - automation-service
+     - automation-test-source-system
+    dns: 10.208.25.59
+    environment:
+     - JAVA_OPTS=-javaagent:/opt/jboss-eap-6.4/bin/jacoco-agent.jar=output=tcpserver,address=0.0.0.0 -agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n
+    logging:
+     driver: json-file
+     options:
+       labels: test
+  automation-test-source-system:
+    image: docker.registry.standardbank.co.za/automation-test-source-system:0.1-SNAPSHOT
+    dns: 10.208.25.59
+    environment:
+     - JAVA_OPTS=-javaagent:/opt/jboss-eap-6.4/bin/jacoco-agent.jar=output=tcpserver,address=0.0.0.0 -agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n
+    logging:
+     driver: json-file
+     options:
+       labels: atss
+  automation-service:
+    image: docker.registry.standardbank.co.za/automation-service:0.1-SNAPSHOT
+    dns: 10.208.25.59
+    links:
+     - automation-test-source-system
+    environment:
+     - JAVA_OPTS=-javaagent:/opt/jboss-eap-6.4/bin/jacoco-agent.jar=output=tcpserver,address=0.0.0.0 -agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n
+    ports:
+     - "32797:8080"
+     - "33797:6300"
+     - "34797:8787"
+     - "11933:11933"
+     - "11922:11922"
+    logging:
+     driver: json-file
+     options:
+       labels: auss
