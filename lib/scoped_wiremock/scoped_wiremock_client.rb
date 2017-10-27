@@ -16,41 +16,66 @@ module ScopedWireMock
     end
 
 
-    def start_new_global_scope(global_correlation_state)
-      execute(wire_mock_base_url + '/__admin/global_scopes/new', :post, global_correlation_state)
+    def start_new_global_scope( runName: 'test_run',
+                                wireMockPublicUrl: ,
+                                integrationScope: 'all',
+                                urlOfServiceUnderTest: ,
+                                globalJournaMode: 'NONE',
+                                payload:{})
+      params = method(__method__).parameters.map(&:last)
+      opts = params.map {|p| [p, eval(p.to_s)]}.to_h
+      execute(wire_mock_base_url + '/__admin/global_scopes/start', :post, opts)
     end
 
     def reset_all()
       execute(wire_mock_base_url + '/__admin/reset_all_scopes', :delete, {})
     end
 
-    def stop_correlated_scope(scope_path)
-      execute(wire_mock_base_url + '/__admin/scopes/stop', :post, {'correlationPath' => scope_path})
-    end
-    #LEGACY
-    def register(arg)
-      execute(wire_mock_base_url + '/__admin/mappings', :post, mapping)
-    end
-
-    #Scope management
-    def join_correlated_scope(known_scope_path)
-      execute(wire_mock_base_url + '/__admin/scopes/join', :post, {'correlationPath' => known_scope_path})
+    def stop_global_scope(runName:  'test_run',
+                          wireMockPublicUrl: ,
+                          sequenceNumber:  ,
+                          urlOfServiceUnderTest:  ,
+                          payload:  {})
+      params = method(__method__).parameters.map(&:last)
+      opts = params.map {|p| [p, eval(p.to_s)]}.to_h
+      execute(wire_mock_base_url + '/__admin/global_scopes/stop', :post, opts)
     end
 
-    def start_new_correlated_scope(parent_path)
-      execute(wire_mock_base_url + '/__admin/scopes/new', :post, {'correlationPath' => parent_path})
+    def start_nested_scope(parent_correlation_path, name, payload)
+      execute(wire_mock_base_url + '/__admin/scopes/start', :post, {
+          :parentCorrelationPath=>parent_correlation_path,
+          :name => name,
+          :payload=>payload
+      })
     end
 
-    def sync_correlated_scope(correlation_state)
-      execute(wire_mock_base_url + '/__admin/scopes/sync', :post, correlation_state)
+    def stop_nested_scope(scope_path,payload)
+      execute(wire_mock_base_url + '/__admin/scopes/stop', :post, {
+          :correlationPath=>scope_path,
+          :payload=>payload
+      })
     end
 
-    def stop_correlated_scope(scope_path)
-      execute(wire_mock_base_url + '/__admin/scopes/stop', :post, {'correlationPath' => scope_path})
+    def start_user_scope(parent_correlation_path, name, payload)
+      execute(wire_mock_base_url + '/__admin/user_scopes/start', :post, {
+          :parentCorrelationPath=>parent_correlation_path,
+          :name => name,
+          :payload=>payload
+      })
     end
 
     def get_correlated_scope(scope_path)
       execute(wire_mock_base_url + '/__admin/scopes/get', :post, {'correlationPath' => scope_path})
+    end
+
+    def register(extended_mapping_builder)
+      execute(wire_mock_base_url + '/__admin/extended_mappings', :post, extended_mapping_builder.build)
+    end
+    #LEGACY
+
+
+    def sync_correlated_scope(correlation_state)
+      execute(wire_mock_base_url + '/__admin/scopes/sync', :post, correlation_state)
     end
 
     #Step management
@@ -74,6 +99,8 @@ module ScopedWireMock
     def wire_mock_base_url
       'http://' + @host +':' + @port.to_s
     end
+
+
 
   end
 end

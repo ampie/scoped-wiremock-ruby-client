@@ -47,6 +47,12 @@ module ScopedWireMock
       @enforce_journal_mode_in_scope=source.enforce_journal_mode_in_scope?
       @record_to_current_resource_dir=source.record_to_current_resource_dir?
     end
+    def build()
+      {'recordToCurrentResourceDir' => @record_to_current_resource_dir,
+           'enforceJournalModeInScope' =>  @enforce_journal_mode_in_scope,
+            'journalModeOverride' => @journal_mode_override,
+            'recordingDirectory' =>  @recording_directory}
+    end
 
   end
 end

@@ -1,5 +1,4 @@
 require 'mustache'
-require_relative '../../scoped_wiremock/'
 require_relative '../../wiremock/wiremock'
 module ScopedWireMock
   module Strategies
@@ -13,7 +12,7 @@ module ScopedWireMock
         Proc.new do |builder, scope|
           builder.change_url_to_pattern
           builder.maps_to_journal_directory(journal_directory)
-          builder.at_priority(scope.calculate_priority(1))
+          builder.at_local_priority('JOURNAL')
           nil
         end
       end

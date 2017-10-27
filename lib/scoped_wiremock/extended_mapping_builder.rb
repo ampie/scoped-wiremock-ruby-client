@@ -8,9 +8,10 @@ module ScopedWireMock
     include WireMock
     attr_reader :request_pattern_builder, :recording_specification, :count_matching_strategy
     attr_writer :request_pattern_builder,
-        def initialize(method)
+
+        def initialize(request_pattern_builder)
           @nested_scopes = []
-          @request_pattern_builder=ExtendedRequestPatternBuilder.new(method)
+          @request_pattern_builder=request_pattern_builder
         end
 
     def to_any_known_external_service
@@ -72,7 +73,9 @@ module ScopedWireMock
       recording_specification.playing_back_responses_from(directory)
       self
     end
-
+    def at_local_priority(local_priority)
+      @local_priority=local_priority
+    end
     def maps_to_journal_directory(journal_directory)
       recording_specification.maps_to_journal_directory(journal_directory)
       change_url_to_pattern
@@ -92,6 +95,15 @@ module ScopedWireMock
       @nested_scopes << child
     end
 
+    def build()
+      result = {
+          'extendedRequest' => request_pattern_builder.build
+      }
+      result['extendedResponse'] = @response_definition_builder.build unless @response_definition_builder.nil?
+      result['localPriority'] = @local_priority
+      result['recordingSpecification'] = @recording_specification.build() unless @recording_specification.nil?
+      result
+    end
 
     def will(proc)
       @response_definition_builder=proc.call(self, @mocking_context)
