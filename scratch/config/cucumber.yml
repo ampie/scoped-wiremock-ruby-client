@@ -1,0 +1,1 @@
+android: PLATFORM=android -r features/step_definitions -r ../lib/scoped_wiremock/cucumber -f ScopedWireMock::CucumberWithWireMock -o out.json -f pretty

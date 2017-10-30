@@ -30,11 +30,11 @@ describe ScopedWireMock::ExtendedMappingBuilder do
     wiremock_client.reset_all
     #given: 'a global scope'
     global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD')
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD')
 
 
     request_builder.correlation_path=global_scope['correlationPath']

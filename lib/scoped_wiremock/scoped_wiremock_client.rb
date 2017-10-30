@@ -16,14 +16,18 @@ module ScopedWireMock
     end
 
 
-    def start_new_global_scope( runName: 'test_run',
-                                wireMockPublicUrl: ,
-                                integrationScope: 'all',
-                                urlOfServiceUnderTest: ,
-                                globalJournaMode: 'NONE',
+    def start_new_global_scope( run_name: 'test_run',
+                                wiremock_public_url: ,
+                                integration_scope: 'all',
+                                url_of_service_under_test: ,
+                                global_journal_mode: 'NONE',
                                 payload:{})
-      params = method(__method__).parameters.map(&:last)
-      opts = params.map {|p| [p, eval(p.to_s)]}.to_h
+      opts = {runName: run_name,
+          wireMockPublicUrl: wiremock_public_url,
+          integrationScope: integration_scope,
+          urlOfServiceUnderTest:url_of_service_under_test ,
+          globalJournaMode: global_journal_mode,
+          payload:payload}
       execute(wire_mock_base_url + '/__admin/global_scopes/start', :post, opts)
     end
 
@@ -31,13 +35,16 @@ module ScopedWireMock
       execute(wire_mock_base_url + '/__admin/reset_all_scopes', :delete, {})
     end
 
-    def stop_global_scope(runName:  'test_run',
-                          wireMockPublicUrl: ,
-                          sequenceNumber:  ,
-                          urlOfServiceUnderTest:  ,
+    def stop_global_scope(run_name:  'test_run',
+                          wiremock_public_url: ,
+                          sequence_number:  ,
+                          url_of_service_under_test:  ,
                           payload:  {})
-      params = method(__method__).parameters.map(&:last)
-      opts = params.map {|p| [p, eval(p.to_s)]}.to_h
+      opts = {runName: run_name,
+              wireMockPublicUrl: wiremock_public_url,
+              sequenceNumber: sequence_number,
+              urlOfServiceUnderTest:url_of_service_under_test ,
+              payload:payload}
       execute(wire_mock_base_url + '/__admin/global_scopes/stop', :post, opts)
     end
 
@@ -56,7 +63,7 @@ module ScopedWireMock
       })
     end
 
-    def start_user_scope(parent_correlation_path, name, payload)
+    def start_user_scope(parent_correlation_path, name, payload={})
       execute(wire_mock_base_url + '/__admin/user_scopes/start', :post, {
           :parentCorrelationPath=>parent_correlation_path,
           :name => name,
@@ -79,12 +86,12 @@ module ScopedWireMock
     end
 
     #Step management
-    def start_step(scope_path, name)
-      execute(wire_mock_base_url + '/__admin/scopes/steps/start', :post, {'correlationPath' => scope_path, 'currentStep' => name})
+    def start_step(scope_path, name, payload={})
+      execute(wire_mock_base_url + '/__admin/scopes/steps/start', :post, {'correlationPath' => scope_path, 'currentStep' => name,'payload' => payload})
     end
 
-    def stop_step(scope_path, name)
-      execute(wire_mock_base_url + '/__admin/scopes/steps/stop', :post, {'correlationPath' => scope_path, 'currentStep' => name})
+    def stop_step(scope_path, name,payload={})
+      execute(wire_mock_base_url + '/__admin/scopes/steps/stop', :post, {'correlationPath' => scope_path, 'currentStep' => name,'payload' => payload})
     end
 
     def find_exchanges_against_step(scope_path, name)

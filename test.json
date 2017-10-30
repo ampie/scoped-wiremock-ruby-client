@@ -1,0 +1,8 @@
+{
+  "correlationPath": "192.168.89.119/8083/android_regression/0/nested1/:user1",
+  "correlationPath": "192.168.89.119/8083/android_regression/0/nested1/nested2/nested3",
+  "serviceInvocationCounts": {},
+  "payload": {
+    "prop1": "val1"
+  }
+}

@@ -26,9 +26,9 @@ module WireMock
     stub_for(mapping_builder)
   end
 
-  def request(method, matcher)
-    MappingBuilder.new(RequestPatternBuilder.new(method, matcher))
-  end
+  # def request(method, matcher)
+  #   MappingBuilder.new(RequestPatternBuilder.new(method, matcher))
+  # end
   def get(matcher)
     MappingBuilder.new(RequestPatternBuilder.new('GET', matcher))
   end

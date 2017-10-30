@@ -12,8 +12,7 @@ module ScopedWireMock
       end
 
       def a(method)
-        builder = ScopedWireMock::ExtendedMappingBuilder.new(current_scope.current_user_scope, method)
-        builder.init_sequential_command
+        builder = ScopedWireMock::ExtendedMappingBuilder.new(ScopedWireMock::ExtendedRequestPatternBuilder.new(method))
         builder
       end
     end

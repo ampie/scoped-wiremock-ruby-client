@@ -11,11 +11,11 @@ describe ScopedWireMock::ScopedWireMockClient do
     #given: 'a service under test'
     #when: 'I start a new global scope'
     result_global_scope = wiremock_client.start_new_global_scope(
-        runName: 'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope: 'something',
-        urlOfServiceUnderTest: "http://#{DOCKER_HOST}:8080",
-        globalJournaMode: 'RECORD',
+        run_name: 'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope: 'something',
+        url_of_service_under_test: "http://#{DOCKER_HOST}:8080",
+        global_journal_mode: 'RECORD',
         payload: {prop1: 'val1'}
     )
     #then: 'the correlation path must reflect the WireMock host name, port, the testRunName and the number 0'
@@ -30,19 +30,19 @@ describe ScopedWireMock::ScopedWireMockClient do
     #given: 'a service under test'
     #when: 'I start a new global scope'
     result_global_scope1 = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
 
     )
     result_global_scope2 = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
 
     )
     #then: 'the correlation path must reflect the WireMock host name, port, the testRunName and the number 1'
@@ -56,18 +56,18 @@ describe ScopedWireMock::ScopedWireMockClient do
     #given: 'a service under test'
     #and" 'a global scope'
     result_global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
 
     )
     #when: 'I stop the global scope'
-    stopped_scope=wiremock_client.stop_global_scope(runName:  'android_regression',
-                                                    wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-                                                    sequenceNumber:  result_global_scope['sequenceNumber'],
-                                                    urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
+    stopped_scope=wiremock_client.stop_global_scope(run_name:  'android_regression',
+                                                    wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+                                                    sequence_number:  result_global_scope['sequenceNumber'],
+                                                    url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
                                                     payload:  {prop1:  'val1'}
     )
     #then: 'the correlation path must reflect the WireMock host name, port, the testRunName and the number 1'
@@ -80,11 +80,11 @@ describe ScopedWireMock::ScopedWireMockClient do
     wiremock_client.reset_all
     #given: 'a global scope'
     global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
 
     )
 
@@ -102,11 +102,11 @@ describe ScopedWireMock::ScopedWireMockClient do
     wiremock_client.reset_all
     #given: 'a global scope'
     global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
     )
 
     #when: 'I start a nested scope within another nested scope'
@@ -126,11 +126,11 @@ describe ScopedWireMock::ScopedWireMockClient do
     wiremock_client.reset_all
     #given: 'a global scope'
     global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
 
     )
 
@@ -147,11 +147,11 @@ describe ScopedWireMock::ScopedWireMockClient do
     wiremock_client.reset_all
     #given: 'a global scope'
     global_scope = wiremock_client.start_new_global_scope(
-        runName:  'android_regression',
-        wireMockPublicUrl:  "http://#{DOCKER_HOST}:8083",
-        integrationScope:  'something',
-        urlOfServiceUnderTest:  "http://#{DOCKER_HOST}:8080",
-        globalJournaMode:  'RECORD'
+        run_name:  'android_regression',
+        wiremock_public_url:  "http://#{DOCKER_HOST}:8083",
+        integration_scope:  'something',
+        url_of_service_under_test:  "http://#{DOCKER_HOST}:8080",
+        global_journal_mode:  'RECORD'
     )
 
     #and: 'a nested scope'

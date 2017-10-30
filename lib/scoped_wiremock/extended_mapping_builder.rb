@@ -13,7 +13,13 @@ module ScopedWireMock
           @nested_scopes = []
           @request_pattern_builder=request_pattern_builder
         end
-
+    def to_any(category)
+      request_pattern_builder.to_any(category)
+      self
+    end
+    def service()
+      self
+    end
     def to_any_known_external_service
       request_pattern_builder.to_any_known_external_service
       self

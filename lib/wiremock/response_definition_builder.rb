@@ -1,7 +1,7 @@
 module WireMock
   class ResponseDefinitionBuilder
     def initialize
-
+      @status=200
     end
 
     def with_header(name, value)

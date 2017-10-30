@@ -9,3 +9,6 @@ gem 'rspec-core'
 gem 'rspec-mocks'
 gem 'simplecov'
 gem 'mustache'
+gem 'calabash-cucumber', "0.20.5"
+gem 'calabash-android', "0.8.4"
+gem 'json', '>= 1.8'

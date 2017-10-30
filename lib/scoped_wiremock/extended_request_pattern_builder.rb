@@ -5,6 +5,7 @@ module ScopedWireMock
     include WireMock
     attr_reader :url_info
     attr_accessor :correlation_path
+
     def initialize(http_method)
       super http_method, nil
       @url_info=nil
@@ -73,8 +74,15 @@ module ScopedWireMock
     end
 
     def build
+
       result = {
-          'method' => @http_method
+          'method' => @http_method,
+          'correlationPath' => @correlation_path,
+          'endpointCategory' => @endpoint_category,
+          'pathSuffix' => @path_suffix,
+          'toAllKnownExternalServices' => @to_all_known_external_services,
+          'urlInfo' => @url_info,
+          'urlIsPattern' => @url_is_pattern
       }
       if @url_pattern
         if url_pattern['urlPattern']
@@ -91,12 +99,6 @@ module ScopedWireMock
       if @body_patterns
         result['bodyPatterns'] = @body_patterns
       end
-      result['endpointCategory'] = @endpoint_category
-      result['pathSuffix'] = @path_suffix
-      result['endpointCategory'] = @endpoint_category
-      result['toAllKnownExternalServices'] = @to_all_known_external_services
-      result['urlInfo'] = @url_info
-      result['urlIsPattern'] = @url_is_pattern
       result
     end
 
